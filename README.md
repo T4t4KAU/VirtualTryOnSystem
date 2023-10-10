@@ -2,12 +2,12 @@
 
 基于深度学习的虚拟试衣系统
 
-第十四届中国服务外包创新大赛获奖作品
+**第十四届中国服务外包创新大赛获奖作品**
 
 联系方式：huangwenxuan271828@163.com
 
-链接：https://github.com/T4t4KAU/VirtualTryOnSystem.git
-
+项目链接：https://github.com/T4t4KAU/VirtualTryOnSystem.git
+论文链接：https://ieeexplore.ieee.org/document/10241865
 
 <img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/0.png?raw=true" alt="image1.png" style="width:100%; height:auto;">
 
@@ -118,6 +118,56 @@ Cloth Mask Extraction via UNet 是一种基于深度学习的图像分割技术�
 服务端会用一个 pending 表记录正在运行的计算模块，如果有长作业在运行，那么不会调度其他的复杂计算任务与其同时运行(避免为机器带来过高的负载而导致崩溃)。
 对于短期且资源需求较低的计算任务，可以调度其他计算任务运行。服务端也不会调度多个复杂计算任务连续执行，以免简单计算任务发生"饥饿"。
 有些计算任务之间具有依赖性，前一个任务的结果会是后一个任务的输入，服务端会将一些计算任务的输出结果暂存到队列中，以待相关任务被调度时使用。
+
+目录结构：
+```
+.
+├── README.md
+├── containers  # 容器操作实现
+│   ├── agnostic
+│   ├── containers.go
+│   ├── densepose
+│   ├── mask
+│   ├── openpose
+│   ├── parsing
+│   ├── resize
+│   ├── resolution
+│   └── vitons
+├── core
+│   ├── etc
+│   ├── govton.go
+│   └── internal
+│       ├── config
+│       │   └── config.go
+│       ├── handler # 请求处理
+│       ├── logic  # 业务逻辑
+│       ├── svc
+│       │   └── service_context.go
+│       └── types
+│           └── types.go
+├── go.mod
+├── go.sum
+├── govton-restart.sh
+├── govton-start.sh
+├── govton-stop.sh
+├── govton.api
+├── nginx.conf
+├── process  # 预处理调用
+│   ├── consts.go
+│   ├── densepose.go
+│   ├── human_agnostic.go
+│   ├── mask.go
+│   ├── parse.go
+│   ├── parse_agnostic.go
+│   ├── proto  # proto生成代码
+│   ├── viton.go
+│   └── vitons.go
+├── run.sh
+├── static # 静态文件
+├── test   # 测试代码
+└── utils
+    └── utils.go
+```
 
 ### OverView
 
