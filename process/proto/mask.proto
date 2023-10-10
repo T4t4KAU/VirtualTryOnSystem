@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = ".;proto";
+
+service ClothSegmentation {
+  rpc Generate(ImageRequest) returns (ImageReply) {}
+}
+
+message ImageRequest {
+  bytes image = 1;
+}
+
+message ImageReply {
+  string message = 1;
+}
+

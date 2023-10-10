@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = ".;proto";
+
+service Viton {
+  rpc Generate (DataRequest) returns (DataReply) {}
+}
+
+message DataRequest {
+  bytes cloth = 1;
+  bytes cloth_mask = 2;
+  bytes image = 3;
+  bytes image_parse = 4;
+  bytes image_pose = 5;
+  string pose_json = 6;
+  string name = 7;
+}
+
+message DataReply {
+  bytes result = 1;
+}

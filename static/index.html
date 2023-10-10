@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VITONS</title>
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            left: 45%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #result {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* 让父元素占据整个视口高度 */
+        }
+
+        #result img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+
+</head>
+<body>
+<h1>UPLOAD IMAGES</h1>
+<form>
+    <label for="image1" class="custom-file-upload">
+        <i class="fa fa-cloud-upload">Image:</i>
+    </label>
+    <input type="file" id="image1" name="image1" accept="image/*">
+
+   <br><br><br>
+
+    <label for="image2" class="custom-file-upload">
+        <i class="fa fa-cloud-upload">Cloth:</i>
+    </label>
+    <input type="file" id="image2" name="image2" accept="image/*">
+
+    <br><br><br>
+
+    <button id="submit">submit</button>
+</form>
+<div id="result"></div>
+<div id="loader" class="loader" style="display: none;"></div>
+
+<script>
+    const submitButton = document.getElementById('submit');
+    const resultDiv = document.getElementById('result');
+    let imageUrl = null;
+
+    submitButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const image1 = document.getElementById('image1').files[0];
+        const image2 = document.getElementById('image2').files[0];
+
+        if (!image1 || !image2) {
+            alert('Please select both images');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('image', image1);
+        formData.append('cloth', image2);
+
+        const loaderDiv = document.createElement('div');
+        loaderDiv.className = 'loader';
+        resultDiv.appendChild(loaderDiv);
+
+        fetch('http://120.26.53.244:8888/vitons', {
+            method: 'POST',
+            body: formData,
+            timeout: 1000 * 60 * 10
+        })
+            .then(response => {
+                resultDiv.removeChild(loaderDiv);
+                return response.blob();
+            })
+            .then(blob => {
+                const newImageUrl = URL.createObjectURL(blob);
+                if (imageUrl) {
+                    // If there was a previous image, remove it
+                    URL.revokeObjectURL(imageUrl);
+                }
+                imageUrl = newImageUrl;
+                resultDiv.innerHTML = `<img src="${imageUrl}" height="500" width="400">`;
+            })
+            .catch(error => {
+                console.error(error);
+                resultDiv.removeChild(loaderDiv);
+            });
+    });
+</script>
+
+</body>
+</html>

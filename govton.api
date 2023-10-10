@@ -1,0 +1,113 @@
+service govton-api {
+	@handler index
+	get /index(IndexRequest) returns(IndexResponse)
+	@handler upload
+	post /upload(UploadRequest) returns (UploadResponse)
+	@handler viton
+	post /viton(VitonRequest) returns (VitonResponse)
+	@handler vitons
+	post /vitons(VitonsRequest) returns(VitonsResponse)
+	@handler openpose
+	post /openpose(OpenPoseRequest) returns(OpenPoseResponse)
+	@handler densepose
+	post /densepose(DensePoseRequest) returns(DensePoseResponse)
+	@handler parse
+	post /parse(HumanParseRequest) returns (HumanParseResponse)
+	@handler clothmask
+	post /clothmask(ClothMaskRequest) returns(ClothMaskRequest)
+	@handler humanAgnostic
+	post /human_agnostic(HumanAgnosticRequest) returns (HumanAgnosticResponse)
+	@handler parseAgnostic
+	post /parse_agnostic(ParseAgnosticRequest) returns (ParseAgnosticResponse)
+}
+
+type IndexRequest {}
+
+type IndexResponse {}
+
+type UploadRequest {
+	File []byte `json:"file"`
+	Path string `json:"path"`
+}
+
+type UploadResponse {
+	Path string `json:"path"`
+}
+
+type VitonRequest {
+	Cloth []byte `json:"cloth"`
+	Image []byte `json:"image"`
+}
+
+type VitonResponse {
+	Image []byte `json:"image"`
+}
+
+type VitonsRequest {
+	Cloth []byte `json:"cloth"`
+	Image []byte `json:"image"`
+}
+
+type VitonsResponse {
+	Result []byte `json:"result"`
+}
+
+type OpenPoseRequest {
+	InputPath    string `json:"inputPath"`
+	OutputPath   string `json:"outputPath"`
+	KeypointPath string `json:"keypointPath"`
+}
+
+type OpenPoseResponse {
+	Image    []byte `json:"image"`
+	Keypoint string `json:"keypoint"`
+}
+
+type DensePoseRequest {
+	Image []byte `json:"image"`
+}
+
+type DensePoseResponse {
+	Image []byte `json:"image"`
+}
+
+type ClothMaskRequest {
+	Image []byte `json:"image"`
+}
+
+type HumanParseRequest {
+	Image []byte `json:"image"`
+}
+
+type HumanParseResponse {
+	Image []byte `json:"image"`
+}
+
+type ParseAgnosticRequest {
+	Image            []byte `json:"image"`
+	Cloth            []byte `json:"cloth"`
+	Mask             []byte `json:"mask"`
+	ImageParse       []byte `json:"parsing"`
+	OpenPoseImage    []byte `json:"openpose"`
+	OpenPoseKeypoint string `json:"keypoint"`
+	DensePoseImage   []byte `json:"densepose"`
+}
+
+type ParseAgnosticResponse {
+	Image []byte `json:"image"`
+}
+
+type HumanAgnosticRequest {
+	Image              []byte `json:"image"`
+	Cloth              []byte `json:"cloth"`
+	Mask               []byte `json:"mask"`
+	ImageParse         []byte `json:"parsing"`
+	OpenPoseImage      []byte `json:"openpose"`
+	OpenPoseKeypoint   string `json:"keypoint"`
+	DensePoseImage     []byte `json:"densepose"`
+	ImageParseAgnostic []byte `json:"agnostic"`
+}
+
+type HumanAgnosticResponse {
+	Image []byte `json:"image"`
+}

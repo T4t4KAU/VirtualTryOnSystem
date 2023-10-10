@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = ".;proto";
+
+service HumanParse {
+  rpc Generate(ParseRequest) returns(ParseReply) {}
+}
+
+message ParseRequest {
+  bytes image = 1;
+}
+
+message ParseReply {
+  string parse = 1;
+  string parse_vis = 2;
+}

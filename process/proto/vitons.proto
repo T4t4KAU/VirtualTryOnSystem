@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = ".;proto";
+
+service Vitons {
+  rpc Generate (VitonsRequest) returns (VitonsReply) {}
+}
+
+message VitonsRequest {
+  bytes cloth = 1;
+  bytes mask = 2;
+  bytes image = 3;
+  bytes image_parse = 4;
+  bytes image_pose = 5;
+  string pose_json = 6;
+  bytes parse_agnostic = 7;
+  bytes image_densepose = 8;
+}
+
+message VitonsReply {
+  string message = 1;
+}
+
+

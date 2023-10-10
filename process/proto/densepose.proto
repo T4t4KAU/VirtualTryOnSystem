@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = ".;proto";
+
+service Densepose {
+  rpc Generate(DensePoseRequest) returns (DensePoseReply) {}
+}
+
+message DensePoseRequest {
+  bytes image = 1;
+}
+
+message DensePoseReply {
+  string message = 1;
+}

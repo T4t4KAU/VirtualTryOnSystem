@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = ".;proto";
+
+service ParseAgnostic {
+  rpc Generate (ParseAgnosticRequest) returns (ParseAgnosticReply) {}
+}
+
+message ParseAgnosticRequest {
+  bytes cloth = 1;
+  bytes mask = 2;
+  bytes image = 3;
+  bytes image_parse = 4;
+  bytes image_pose = 5;
+  string pose_json = 6;
+  bytes image_densepose = 7;
+}
+
+message ParseAgnosticReply {
+  string message = 1;
+}
