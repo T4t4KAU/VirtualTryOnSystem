@@ -7,6 +7,7 @@
 联系方式：huangwenxuan271828@163.com
 
 项目链接：https://github.com/T4t4KAU/VirtualTryOnSystem.git
+
 论文链接：https://ieeexplore.ieee.org/document/10241865
 
 <img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/0.png?raw=true" alt="image1.png" style="width:100%; height:auto;">
@@ -114,7 +115,8 @@ Cloth Mask Extraction via UNet 是一种基于深度学习的图像分割技术�
 服务端的职责是启动、使用和调度已经容器化的计算模块。我们使用Go语言中的Go-Zero框架进行开发，利用事先定义的 protobuf 文件可以方便快捷地生成代码，也便于后期的扩展与更新。
 
 服务端使用RPC(基于gRPC框架)与计算模块进行通信，具体应用中，对于占用较多计算资源的模块(如HumanParse)，在服务启动时就预先加载(热启动)并且常驻后台运行并监听请求，在运行时尽量不和其他计算任务同时进行。
-对于占用较少计算资源模块(如ClothMask), 该模块不会预先启动或常驻运行，仅在需要时运行一次，避免白白浪费内存(将内存资源尽量留给HumanParse)，这样的模块将使用命令行和SDK直接启停。 
+对于占用较少计算资源模块(如ClothMask), 该模块不会预先启动或常驻运行，仅在需要时运行一次，避免白白浪费内存(将内存资源尽量留给HumanParse)，这样的模块将使用命令行和SDK直接启停。
+
 服务端会用一个 pending 表记录正在运行的计算模块，如果有长作业在运行，那么不会调度其他的复杂计算任务与其同时运行(避免为机器带来过高的负载而导致崩溃)。
 对于短期且资源需求较低的计算任务，可以调度其他计算任务运行。服务端也不会调度多个复杂计算任务连续执行，以免简单计算任务发生"饥饿"。
 有些计算任务之间具有依赖性，前一个任务的结果会是后一个任务的输入，服务端会将一些计算任务的输出结果暂存到队列中，以待相关任务被调度时使用。
