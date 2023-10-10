@@ -66,7 +66,7 @@ curl -X POST -F "image=@./image/test.jpg" -F "cloth=@./cloth/test.jpg" 127.0.0.1
 
 DensePose 是一种计算机视觉技术，旨在将图像中的人体姿态估计与密集表面估计结合起 来，能够精确地将人体图像中的每个像素点与一个身体部位或身体表面相关联。
 
-<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/6.png?raw=true" alt="image1.png" style="width:100%; height:auto;">
+<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/6.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
 
 对于该计算密集型引用，我们使用Nginx对三组应用进行反向代理和负载均衡，避免了串行访问导致的低响应
 
@@ -76,35 +76,35 @@ DensePose 是一种计算机视觉技术，旨在将图像中的人体姿态估�
 
 OpenPose 是一种计算机视觉技术，能够实时地检测图像或视频中人体的姿势和动作，以 C++和 Python 编写，基于深度学习算法。
 
-<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/7.png?raw=true" alt="image1.png" style="width:100%; height:auto;">
+<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/7.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
 
 #### Human Parsing via Part Grouping Network (PGN)
 
 Human Parsing via Part Grouping Network (PGN)是一种图像语义分割技术，主要用于 分割人体部位和解析人体姿势。
 
-<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/8.png?raw=true" alt="image1.png" style="width:100%; height:auto;">
+<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/8.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
 
 #### Clothing-Agnostic Representation
 
 为了删除原始图像中的服装细节，本项目引入了一个新的特征服装不可知表示(Cloth Agnostic Processing)，它使用姿势信息和分割图，彻底消除对原衣服的依赖，保留需要 复制的身体部位。
 
-<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/9.png?raw=true" alt="image1.png" style="width:100%; height:auto;">
+<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/9.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
 
 #### Cloth Mask Extraction via UNet
 
 Cloth Mask Extraction via UNet 是一种基于深度学习的图像分割技术，主要用于从服 装图像中提取出衣服的遮罩。
 
-<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/10.png?raw=true" alt="image1.png" style="width:100%; height:auto;">
+<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/10.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
 
 #### High Resolution via SRGAN
 
 本项目额外引入的一种基于 SRGAN 的超分辨率算法，是对预处理结果的进一步优化，为本 团队基于项目需求的创新，能够显著提高最终的结果的效果。
 
-<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/11.png?raw=true" alt="image1.png" style="width:100%; height:auto;">
+<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/11.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
 
 ### OverView
 
-<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/2.png?raw=true" alt="image1.png" style="width:100%; height:auto;">
+<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/2.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
 
 ## 主要工作
 
