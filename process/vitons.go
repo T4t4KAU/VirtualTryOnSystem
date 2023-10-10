@@ -26,24 +26,24 @@ func VitonsAutoGenerate(image []byte, cloth []byte) []byte {
 
 	densepose, err := ProcessDensePose(image) // 获取densepose图片
 	if err != nil {
-		logx.Error("densepose errror: ", err)
+		logx.Error("densepose error: ", err)
 	}
 	logx.Info("densepose success")
 
 	parse, _, err := ProcessHumanParse(image) // human parse解析
 	if err != nil {
-		logx.Error("human parsing errror: ", err)
+		logx.Error("human parsing error: ", err)
 	}
 	logx.Info("human parsing success")
 
 	agnostic, err := ProcessParseAgnostic(cloth, mask, image, parse, poseImage, keypoint, densepose) // parsing agnostic
 	if err != nil {
-		logx.Error("parsing agnostic errror: ", err)
+		logx.Error("parsing agnostic error: ", err)
 	}
 	logx.Info("parsing agnostic success")
 	result, err := VitonsGenerate(cloth, mask, image, parse, poseImage, string(keypoint), agnostic, densepose)
 	if err != nil {
-		logx.Error("vitons generate errror: ", err)
+		logx.Error("vitons generate error: ", err)
 	}
 	logx.Info("vitons generate success")
 

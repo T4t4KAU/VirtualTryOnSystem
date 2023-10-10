@@ -8,6 +8,7 @@
 
 链接：https://github.com/T4t4KAU/VirtualTryOnSystem.git
 
+
 <img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/0.png?raw=true" alt="image1.png" style="width:100%; height:auto;">
 
 ## 推荐硬件
@@ -40,6 +41,12 @@ bash run.sh
 ```
 
 应用默认启动在8888端口，启动时间可能会较长
+
+启动3组实例：
+
+```
+bash govton-start.sh
+```
 
 POST请求接口：
 
@@ -92,7 +99,7 @@ Human Parsing via Part Grouping Network (PGN)是一种图像语义分割技术�
 
 #### Cloth Mask Extraction via UNet
 
-Cloth Mask Extraction via UNet 是一种基于深度学习的图像分割技术，主要用于从服 装图像中提取出衣服的遮罩。
+Cloth Mask Extraction via UNet 是一种基于深度学习的图像分割技术，主要用于从服装图像中提取出衣服的遮罩。
 
 <img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/10.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
 
@@ -101,6 +108,16 @@ Cloth Mask Extraction via UNet 是一种基于深度学习的图像分割技术�
 本项目额外引入的一种基于 SRGAN 的超分辨率算法，是对预处理结果的进一步优化，为本 团队基于项目需求的创新，能够显著提高最终的结果的效果。
 
 <img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/11.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
+
+### 服务端
+
+服务端的职责是启动、使用和调度已经容器化的计算模块。我们使用Go语言中的Go-Zero框架进行开发，利用事先定义的 protobuf 文件可以方便快捷地生成代码，也便于后期的扩展与更新。
+
+服务端使用RPC(基于gRPC框架)与计算模块进行通信，具体应用中，对于占用较多计算资源的模块(如HumanParse)，在服务启动时就预先加载(热启动)并且常驻后台运行并监听请求，在运行时尽量不和其他计算任务同时进行。
+对于占用较少计算资源模块(如ClothMask), 该模块不会预先启动或常驻运行，仅在需要时运行一次，避免白白浪费内存(将内存资源尽量留给HumanParse)，这样的模块将使用命令行和SDK直接启停。 
+服务端会用一个 pending 表记录正在运行的计算模块，如果有长作业在运行，那么不会调度其他的复杂计算任务与其同时运行(避免为机器带来过高的负载而导致崩溃)。
+对于短期且资源需求较低的计算任务，可以调度其他计算任务运行。服务端也不会调度多个复杂计算任务连续执行，以免简单计算任务发生"饥饿"。
+有些计算任务之间具有依赖性，前一个任务的结果会是后一个任务的输入，服务端会将一些计算任务的输出结果暂存到队列中，以待相关任务被调度时使用。
 
 ### OverView
 
@@ -111,8 +128,6 @@ Cloth Mask Extraction via UNet 是一种基于深度学习的图像分割技术�
 将多个预处理模块和推理计算模块进行容器化，并为容器增加了RPC通信功能(基于gRPC)和日志输出，解决了深度学习项目的移植性难题，可以通过Docker将模块快速部署到Linux服务器上，且无需安装其他依赖。
 
 开发了WEB服务端程序负责使用和调度预处理和推理计算模块，对外部暴露一个HTTP接口，便于用户进行图片的上传和结果的接收。
-
-
 
 ## 试衣效果
 
