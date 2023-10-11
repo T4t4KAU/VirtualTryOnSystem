@@ -116,8 +116,11 @@ Cloth Mask Extraction via UNet 是一种基于深度学习的图像分割技术�
 
 架构图：
 
+<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/13.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
 
 总体流程：
+
+<img src="https://github.com/T4t4KAU/VirtualTryOnSystem/blob/main/static/12.png?raw=true" alt="image1.png" style="width:50%; height:auto;">
 
 ### 服务端
 
